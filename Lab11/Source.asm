@@ -8,6 +8,18 @@ Include Irvine32.inc
     w SDWORD ?
 .code
 main PROC
+    ; w = (x + y) - (50 + x + y + z - p)
+    MOV eax,x     ; EAX = x
+    ADD eax,y     ; EAX = x+y
+
+    MOV ebx,50d   ; EAX = 50
+    ADD ebx,eax   ; EAX = 50 + x + y
+    ADD ebx,z     ; EAX = 50 + x + y + z
+    SUB ebx,p     ; EAX = 50 + x + y + z - p
+    SUB eax,ebx   ; EAX = (x + y) - (50 + x + y + z - p)
+    MOV w,ebx     ; w = (x + y) - (50 + x + y + z - p)
+    call writeInt
+
 
     exit 
 main ENDP
